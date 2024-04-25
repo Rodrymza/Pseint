@@ -1,0 +1,15 @@
+Funcion numvalidos=validarnumeros(ingreso)
+		numvalidos=Falso
+		diccionario="0123456789"
+		para i=1 hasta longitud(ingreso) con paso 1 Hacer
+			letra=subcadena(ingreso,i,i)
+			para j=1 hasta longitud(diccionario) con paso 1 Hacer
+				si letra=subcadena(diccionario,j,j)
+					cont=cont+1
+				FinSi
+			FinPara
+		FinPara
+		si cont=longitud(ingreso)
+			numvalidos=Verdadero
+		FinSi
+FinFuncion
