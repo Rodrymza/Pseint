@@ -1,0 +1,6 @@
+funcion SiNoValido=validarSiNo(respuesta)
+	SiNoValido=falso
+	si minusculas(respuesta)="s" o minusculas(respuesta)="n"
+		SiNoValido=verdadero
+	FinSi
+FinFuncion
