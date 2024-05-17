@@ -1,0 +1,94 @@
+//Aplicacion para calcular repartir gastos en una juntada
+//Rodry (c) 2024
+//rodrymza@gmail.com
+//Version 1.0 Mayo 2024
+
+Algoritmo SaquemosCuentas
+	
+	definir nombre Como Caracter
+	definir total,gastounitario,promedio,tamamanio,gastofinal Como Real		//gastofinal corresponde a lo que debe poner y recibir cada persona
+	
+	escribir "Ingrese el total de participantes"
+	leer tamanio
+	
+	dimension gastounitario[tamanio], nombre[tamanio], gastofinal[tamanio]	//dimensionamiento de vectores nombre, gasto y gastofinal
+	
+	para i=1 hasta tamanio con paso 1 Hacer
+		escribir "Ingrese nombre de participante " i
+		leer nombre[i]
+		escribir "Ingrese gasto"
+		leer gastounitario[i]
+		total=total+gastounitario[i]
+	FinPara
+	
+
+	promedio=total/tamanio
+	Limpiar Pantalla
+	
+	//Ordenamiento gastos de mayor a menor
+	para i=1 hasta tamanio con paso 1 Hacer
+		para j=i hasta tamanio con paso 1 hacer
+			si gastounitario[j]>gastounitario[i]
+				aux=gastounitario[i]
+				auxn=nombre[i]
+				gastounitario[i]=gastounitario[j]
+				nombre[i]=nombre[j]
+				gastounitario[j]=aux
+				nombre[j]=auxn
+			FinSi
+		FinPara
+	FinPara
+	
+	// Muestra de datos por pantalla, gastos ordenados de mayor a menor, total y cuanto debe gastar cada uno
+	escribir "Gastos ordenados"
+	escribir "________________________________"
+	para i=1 hasta tamanio con paso 1 Hacer
+		escribir nombre[i] " gasto $" gastounitario[i]
+	FinPara
+	escribir "________________________________"
+	
+	escribir "________________________________"
+	escribir "Total gastado $" total
+	escribir "Cada uno debe poner $" redon(promedio)
+	
+	escribir "________________________________"
+	para i=1 hasta tamanio con paso 1 Hacer
+		gastofinal[i]=promedio-gastounitario[i]
+		
+		si gastofinal[i]>=0
+			escribir nombre[i] " debe poner $" redon(gastofinal[i])				//quienes tienen que pagar y quienes tienen que cobrar
+		SiNo
+			escribir nombre[i] " le deben pagar $" redon(abs(gastofinal[i]))
+		FinSi
+	FinPara
+	
+	escribir "________________________________"
+	escribir "Saquemos cuentas:"
+	escribir "________________________________"
+	
+	para i=1 hasta tamanio con paso 1 Hacer
+		
+		para j=1 hasta tamanio con paso 1 Hacer
+			si gastofinal[i]<0 y i<>j
+				
+				si gastofinal[j]>0
+					si abs(gastofinal[i])>gastofinal[j]		//si el dinero que tiene que poner el participante es menor al que hay que pagarle se le pasa completo
+						gastofinal[i]=gastofinal[i]+gastofinal[j]
+						
+						escribir nombre[j] " le paga $" redon(gastofinal[j]) " a " nombre[i]
+						gastofinal[j]=0		//el participante queda en 0, ya pago lo que debe
+					SiNo
+						gastofinal[j]=gastofinal[j]+gastofinal[i]		//caso contrario, que lo que haya que pagarle sea menor a lo que debe poner, se paga solo lo que corresponde
+																		//y queda el resto guardado en lo que debe pagar el participante, el que tiene que cobrar queda en 0, se le pago todo lo correspondiente
+						escribir nombre[j] " le paga $" redon(abs(gastofinal[i])) " a " nombre[i]
+						gastofinal[i]=0
+					FinSi
+					
+				FinSi
+			FinSi
+		FinPara
+		
+	FinPara
+	escribir "________________________________"
+	
+FinAlgoritmo
